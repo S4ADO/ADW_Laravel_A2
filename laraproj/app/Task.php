@@ -65,7 +65,7 @@ class Task extends Model
 
         if($request->title != "")
         {
-            if($request->titleexact == "exact")
+            if(!empty($request->titleexact))
             {
                 $query = $query
                 ->where('userid', '=', Auth::user()->id)
@@ -86,7 +86,7 @@ class Task extends Model
 
         if($request->body != "")
         {
-            if($request->bodyexact == "exact")
+            if(!empty($request->bodyexact))
             {
                 $query = $query
                 ->where('userid', '=', Auth::user()->id)
@@ -189,175 +189,6 @@ class Task extends Model
             }
         }
         $tasks = $query->get();
-        return $tasks;
-    }
-
-    /**
-    *   
-    */
-    public static function searchDateAdded($searchString, $criteria)
-    {
-        if($criteria == "exact")
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('created_at', '=', "$searchString")
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        elseif($criteria == "more")
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('created_at', '>', "$searchString")
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        else
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('created_at', '<', "$searchString")
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        return $tasks;
-    }
-
-    /**
-    *   
-    */
-    public static function searchTitle($searchString, $criteria)
-    {
-        if($criteria == "exact")
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('title', '=', "$searchString")
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        else
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('title', 'LIKE', "%{$searchString}%")
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        return $tasks;
-    }
-
-    /**
-    *   
-    */
-    public static function searchBody($searchString, $criteria)
-    {
-        if($criteria == "exact")
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('body', '=', "$searchString")
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        else
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('body', 'LIKE', "%{$searchString}%")
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        return $tasks;
-    }
-
-    /**
-    *   
-    */
-    public static function searchImportance($searchString, $criteria)
-    {
-        if($criteria == "exact")
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('importance.importanceid', '=', "$searchString")
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        elseif($criteria == "more")
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('importance.importanceid', '>', $searchString)
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        else
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('importance.importanceid', '<', $searchString)
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        return $tasks;
-    }
-
-    /**
-    *   
-    */
-    public static function searchCompleted($searchString)
-    {
-        if($searchString == "checked")
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('complete', '=', 1)
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        else
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('complete', '=', 0)
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        return $tasks;
-    }
-
-
-    /**
-    *   
-    */
-    public static function searchCompleteDate($searchString, $criteria)
-    {
-        if($criteria == "exact")
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('complete_date', '=', "$searchString")
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        elseif($criteria == "more")
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('complete_date', '>', "$searchString")
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
-        else
-        {
-            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
-            ->where('userid', '=', Auth::user()->id)
-            ->where('complete_date', '<', "$searchString")
-            ->select('tasks.*', 'importance.importance')
-            ->get();
-        }
         return $tasks;
     }
 
