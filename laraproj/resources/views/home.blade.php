@@ -14,7 +14,7 @@
                             <input type = "text" name = "search" placeholder = "Search task bodies">
                             <input type="image" height = "15" width = "15" src="https://www.alrightnow.com/wp-content/themes/alright/img/search-icon.png" alt="Submit Form" />
                             <br/>
-                            <a href = "/home/advancedsearch"/>Advanced Search</a>
+                            <a href = "/advancedsearch"/>Advanced Search</a>
                         </form>
                     </div>
                 </div>

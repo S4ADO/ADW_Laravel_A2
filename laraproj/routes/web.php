@@ -17,9 +17,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/create', 'HomeController@create');
 Route::get('/home/edit/{id}', 'HomeController@edit');
 Route::get('/home/{order}', 'HomeController@order');
+Route::get('/advancedsearch', 'HomeController@advancedSearch');
 
 Route::post('/settings/avatar/post', 'SettingsController@avatarpost');
 Route::post('/home/post', 'HomeController@post');
 Route::post('/home/edit', 'HomeController@editpost');
 Route::post('/home/delete', 'HomeController@deletepost');
 Route::post('/home/search', 'HomeController@search');
+Route::post('/advancedsearchpost', 'HomeController@advancedSearchExecute');

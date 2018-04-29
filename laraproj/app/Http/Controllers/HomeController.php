@@ -86,14 +86,30 @@ class HomeController extends Controller
      */
     public function advancedSearch()
     {
-        $this->validate(request(), [
-            'search' => 'required|min:3',
-        ]);
-
-        $searchString = request('search');
-        $foundTasks = Task::searchTasks($searchString);
-        return view('search', compact('foundTasks', 'searchString'));
+        $post = "no";
+        return view('advancedsearch', compact('post'));
     }
+
+    /**
+     * Returns Advanced search results
+     */
+    public function advancedSearchExecute(Request $request)
+    {
+        $post = "yes";
+        $tasks = array();
+        $this->validate(request(), [
+            'added' => 'sometimes|nullable',
+            'title' => 'sometimes|nullable|min:3',
+            'body' => 'sometimes|nullable|min:5',
+            'done' => 'sometimes|nullable',
+            'importance' => 'sometimes|nullable|numeric|min:1|max:5',
+            'completed' => 'sometimes|nullable'
+        ]);
+        $tasks = Task::advancedsearch(request());
+        
+        return view('advancedsearch', compact('post', 'tasks'));
+    }
+
 
 
     /**
