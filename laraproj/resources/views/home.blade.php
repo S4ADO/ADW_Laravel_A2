@@ -55,7 +55,9 @@
                     @else
                         <p>You have no current tasks</p>    
                     @endif
-                    <a href = "/home/create">create task</a>
+                    <div class="links">
+                        <a href = "/home/create">Create task</a>
+                    </div>   
                 </div>
             </div>
         </div>

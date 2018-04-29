@@ -26,4 +26,13 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+
+    //Sets the user's avatar string to the name of the uploaded avatar
+    public static function setImage($userid, $picName)
+    {
+        $user = User::find($userid);
+        $user->avatar = $picName;
+        $user->save();
+    }
 }
