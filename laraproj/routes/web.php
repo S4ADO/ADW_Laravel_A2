@@ -16,6 +16,7 @@ Route::get('/settings/avatar', 'SettingsController@avatar');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/create', 'HomeController@create');
 Route::get('/home/edit/{id}', 'HomeController@edit');
+Route::get('/home/{order}', 'HomeController@order');
 
 Route::post('/settings/avatar/post', 'SettingsController@avatarpost');
 Route::post('/home/post', 'HomeController@post');

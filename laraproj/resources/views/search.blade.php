@@ -13,6 +13,8 @@
                             {{ csrf_field() }}
                             <input type = "text" name = "search" placeholder = "Search task bodies">
                             <input type="image" height = "15" width = "15" src="https://www.alrightnow.com/wp-content/themes/alright/img/search-icon.png" alt="Submit Form" />
+                            <br/>
+                            <a href = "/home/advancedsearch"/>Advanced Search</a>
                         </form>
                     </div>
                 </div>
@@ -26,13 +28,14 @@
                     @if (sizeof($foundTasks) != 0 )
                     <table class="table table-striped">
                             <tr>
-                                <th>Date added</th>
+                                <th><a href = "/home/added"/>Date added</a></th>  
                                 <th>Title</th>
                                 <th>Body</th>
-                                <th>Date to Complete</th>
-                                <th>Completed</th>    
+                                <th><a href = "/home/importance"/>Importance</a></th>   
+                                <th><a href = "/home/completed"/>Date to Complete</a></th>
+                                <th><a href = "/home/complete"/>Completed</a></th> 
                                 <th>Edit</th>
-                                <th>Delete</th>        
+                                <th>Delete</th>         
                             </tr>
                         @foreach($foundTasks as $task)
                             <tr>
@@ -44,6 +47,7 @@
                                 <td> {{$task->created_at}} </td>
                                 <td> {{$task->title}} </td>
                                 <td> <?php print $task->body ?> </td>
+                                <td> {{$task->importanceid}} ({{$task->importance}}) </td>
                                 <td> {{$task->complete_date}} </td>
                                 <td> {{$task->complete == 0 ? 'No' : 'Yes'}} </td>
                                 <td> <a href = "/home/edit/{{$task->id}}">Edit</a> </td>

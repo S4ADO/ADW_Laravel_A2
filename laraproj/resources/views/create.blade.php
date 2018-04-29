@@ -23,6 +23,9 @@
                         <label for="body">Body</label><br>
                         <textarea rows="4" cols="50" name = "body" form="createpost" placeholder="Input task body" required></textarea><br>
 
+                        <label for="importance">Importance (1-5)</label><br>
+                        <input name="importance" id="importance" type = "number" min="1" max="5" required><br>
+
                         <label for="date">Completion Date</label><br>
                         <input name="date" id="date" type = "datetime-local" required><br><br>
 

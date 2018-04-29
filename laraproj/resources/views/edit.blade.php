@@ -23,6 +23,7 @@
                                     <th>Date added</th>
                                     <th>Title</th>
                                     <th>Body</th>
+                                    <th>Importance</th> 
                                     <th>Date to Complete</th>
                                     <th>Completed</th>    
                                     <th>Save</th>     
@@ -33,6 +34,7 @@
                                     <td contenteditable='true'>
                                         <textarea rows="4" cols="50" name = "body" form="editpost" required>{{$task->body}}</textarea>
                                     </td>
+                                    <td contenteditable='true'><input name="importance" id="importance" type = "number" min="1" max="5" value="{{$task->importanceid}}" required></td>
                                     <td><input name="date" id="date" type = "datetime-local" value = "{{ date("Y-m-d\TH:i:s", strtotime($task->complete_date)) }}" required></td>
                                     <td> <input type="checkbox" name="completecb" value="checked" {{$task->complete == 0 ? '' : 'checked'}} > </td>
                                     <td> 

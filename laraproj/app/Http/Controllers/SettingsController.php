@@ -32,14 +32,21 @@ class SettingsController extends Controller
         return view('settings', compact('info'));
     }
 
-    //Returns the avatar view
+    /**
+     * Returns the avatar views
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function avatar()
     {
         $info = "";
         return view('avatar', compact('info'));
     }
 
-    //Uploads the user inputted image to the server
+    /**
+     * 
+     * Uploads user submitted avatar to the server
+     */
     public function avatarpost()
     {
         //Check to make sure correct file format is used
@@ -51,12 +58,17 @@ class SettingsController extends Controller
             Session::flash('message', 'Allowed file formats are: jpg, gif, png and jpeg. You must use one of them'); 
             return view('avatar');
         }
+        elseif(request()->avatarin->getClientSize() > 200000)//If filesize is more than 2MB
+        {
+            Session::flash('message', 'File size must be smaller than 2MB'); 
+            return view('avatar');
+        }
         else
         {
             $photoName = Auth::user()->name.'.'.request()->avatarin->getClientOriginalExtension();
             request()->avatarin->move(public_path('avatars'), $photoName);
             User::setImage(Auth::user()->id, $photoName);
-            Session::flash('message', 'Avatar added successfully'); 
+            Session::flash('message','Avatar added successfully'); 
             return redirect('/settings/avatar');
         }
     }

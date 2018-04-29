@@ -22,8 +22,10 @@ class Task extends Model
     */
     public static function searchTasks($searchString)
     {
-        $tasks = DB::table('tasks')->where('userid', '=', Auth::user()->id)
+        $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
+        ->where('userid', '=', Auth::user()->id)
         ->where('body', 'LIKE', "%{$searchString}%")
+        ->select('tasks.*', 'importance.importance')
         ->get();
         return $tasks;
     }
@@ -32,11 +34,24 @@ class Task extends Model
     /**
     *	Returns an array of all of the tasks for the current user
     */
-    public static function getTasks()
+    public static function getTasks($orderBy)
     {
-    	$tasks = DB::table('tasks')->where('userid', '=', Auth::user()->id)
-    	->orderByRaw('id DESC')
-    	->get();
+        if($orderBy == "")
+        {
+            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
+            ->where('userid', '=', Auth::user()->id)
+            ->select('tasks.*', 'importance.importance')
+            ->orderByRaw('id DESC')
+            ->get();
+        }
+        else
+        {
+            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
+            ->where('userid', '=', Auth::user()->id)
+            ->select('tasks.*', 'importance.importance')
+            ->orderByRaw($orderBy)
+            ->get();
+        }
     	return $tasks;
     }
 
