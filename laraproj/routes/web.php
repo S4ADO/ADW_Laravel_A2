@@ -17,6 +17,7 @@ Route::get('/callback', 'SocialAuthFacebookController@callback');
 //GET
 Route::get('/settings', 'SettingsController@index');
 Route::get('/settings/avatar', 'SettingsController@avatar');
+Route::get('/settings/avatar/delete', 'SettingsController@avatarDelete');
 Route::get('/settings/statistics', 'SettingsController@statistics');
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/home/create', 'HomeController@create');

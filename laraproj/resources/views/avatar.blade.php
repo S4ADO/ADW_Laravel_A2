@@ -19,7 +19,8 @@
                         @if(Auth::user()->avatar == "")
                             <img src = "{{ asset('images/default_avatar.png') }}" height = "70" width = "70"/>
                         @else
-                            <img src = "/avatars/{{Auth::user()->avatar}}"  height = "100" width = "100"/>
+                            <img src = "/avatars/{{Auth::user()->avatar}}"  height = "100" width = "100"/><br/>
+                            <a href = "/settings/avatar/delete">Delete avatar</a>
                         @endif
                         <br/><br/>
                         <form enctype="multipart/form-data" method="post" action="/settings/avatar/post">

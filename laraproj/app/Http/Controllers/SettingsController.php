@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Task;
 use App\User;
+use File;
 use Session;
 use Auth;
 
@@ -39,7 +40,19 @@ class SettingsController extends Controller
      */
     public function statistics()
     {
-        $tasks = Task::getCompleteTasks(false);
+        $iTotalTasks = 0;
+        $iCompletedTasks = 0;
+        $iIncompletedTasks = 0;
+        $iIncompletedTasksPastDate = 0;
+
+        $tasks = Task::getTasks("");
+        //All tasks
+        foreach($tasks as $task)
+        {
+            $iTotalTasks++;
+        }
+
+        $tasks = Task::getCompleteTasks("false");
         $notCompleteImportanceInfo[0] = 0;
         $notCompleteImportanceInfo[1] = 0;
         $notCompleteImportanceInfo[2] = 0;
@@ -50,8 +63,10 @@ class SettingsController extends Controller
         foreach($tasks as $task)
         {
             $notCompleteImportanceInfo[$task->importanceid]++;
+            $iIncompletedTasks++;
         }
-        $tasks = Task::getCompleteTasks(true);
+
+        $tasks = Task::getCompleteTasks("true");
         $completeImportanceInfo[0] = 0;
         $completeImportanceInfo[1] = 0;
         $completeImportanceInfo[2] = 0;
@@ -62,8 +77,30 @@ class SettingsController extends Controller
         foreach($tasks as $task)
         {
             $completeImportanceInfo[$task->importanceid]++;
+            $iCompletedTasks++;
         }
-        return view('statistics', compact('notCompleteImportanceInfo',  'completeImportanceInfo'));
+
+        $tasks = Task::getCompleteTasks("");
+        $completeImportanceDateInfo[0] = 0;
+        $completeImportanceDateInfo[1] = 0;
+        $completeImportanceDateInfo[2] = 0;
+        $completeImportanceDateInfo[3] = 0;
+        $completeImportanceDateInfo[4] = 0;
+        $completeImportanceDateInfo[5] = 0;
+        //Tasks which are incomplete and past their complete date
+        foreach($tasks as $task)
+        {
+            $completeImportanceDateInfo[$task->importanceid]++;
+            $iIncompletedTasksPastDate++;
+        }
+
+        return view('statistics', compact('notCompleteImportanceInfo',
+          'completeImportanceInfo', 
+          'completeImportanceDateInfo',
+          'iTotalTasks',
+          'iCompletedTasks',
+          'iIncompletedTasks',
+          'iIncompletedTasksPastDate'));
     }
 
     /**
@@ -105,5 +142,17 @@ class SettingsController extends Controller
             Session::flash('message','Avatar added successfully'); 
             return redirect('/settings/avatar');
         }
+    }
+
+     /**
+     * 
+     * Deletes the user image if exists
+     */
+    public function avatarDelete()
+    {
+        $picName = User::deleteImage(Auth::user()->id);
+        File::delete($picName);
+        Session::flash('message','Avatar deleted successfully'); 
+        return redirect('/settings/avatar');
     }
 }

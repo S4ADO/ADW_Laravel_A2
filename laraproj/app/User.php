@@ -35,4 +35,14 @@ class User extends Authenticatable
         $user->avatar = $picName;
         $user->save();
     }
+
+    //Deletes the reference to the user's avatar
+    public static function deleteImage($userid)
+    {
+        $user = User::find($userid);
+        $picName = $user->avatar;
+        $user->avatar = "";
+        $user->save();
+        return $picName;
+    }
 }

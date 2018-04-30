@@ -39,11 +39,18 @@
                             </tr>
                         @foreach($tasks as $task)
                             <tr>
+                                <?php
+                                    //Highlight completion dates past their time
+                                    if($task->complete_date < date("Y-m-d H:i:s") && !$task->complete)
+                                    {
+                                        $task->complete_date = "<font color = red>" . $task->complete_date . "</font>";
+                                    }
+                                ?>
                                 <td> {{$task->created_at}} </td>
                                 <td> {{$task->title}} </td>
                                 <td> {{$task->body}} </td>
                                 <td> {{$task->importanceid}} ({{$task->importance}}) </td>
-                                <td> {{$task->complete_date}} </td>
+                                <td> <?php print $task->complete_date ?> </td>
                                 <td> {{$task->complete == 0 ? 'No' : 'Yes'}} </td>
                                 <td> <a href = "/home/edit/{{$task->id}}">Edit</a> </td>
                                 <td> 

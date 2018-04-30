@@ -35,7 +35,7 @@ class Task extends Model
     */
     public static function getCompleteTasks($completed)
     {
-        if(!$completed)
+        if($completed == "false")
         {
             $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
             ->where('userid', '=', Auth::user()->id)
@@ -43,11 +43,20 @@ class Task extends Model
             ->select('tasks.*', 'importance.importance')
             ->get();
         }
-        else
+        elseif($completed == "true")
         {
             $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
             ->where('userid', '=', Auth::user()->id)
             ->where('complete', '=', 1)
+            ->select('tasks.*', 'importance.importance')
+            ->get();
+        }
+        else
+        {
+            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
+            ->where('userid', '=', Auth::user()->id)
+            ->where('complete', '=', 0)
+            ->where('complete_date', '<', \Carbon\Carbon::now())
             ->select('tasks.*', 'importance.importance')
             ->get();
         }
