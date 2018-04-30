@@ -5,9 +5,6 @@ Route::get('/', function () {
     return view('/auth/login');
 });
 
-Route::get('/test', 'TestController@index');
-Route::get('/test/{id}', 'TestController@show');
-
 Auth::routes();
 
 //Facebook login auth routes
@@ -15,6 +12,7 @@ Route::get('/redirect', 'SocialAuthFacebookController@redirect');
 Route::get('/callback', 'SocialAuthFacebookController@callback');
 
 //GET
+Route::get('/verifyemail/{token}', 'Auth\RegisterController@verify');
 Route::get('/settings', 'SettingsController@index');
 Route::get('/settings/avatar', 'SettingsController@avatar');
 Route::get('/settings/avatar/delete', 'SettingsController@avatarDelete');
