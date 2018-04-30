@@ -18,6 +18,8 @@
                         <div class="links">
                             <a href = "/settings/avatar">Upload an avatar</a>
                             <br/><br/>
+                            <a href = "/settings/statistics">View task statistics</a>
+                            <br/><br/>
                         </div>    
                     </div>    
                 </div>

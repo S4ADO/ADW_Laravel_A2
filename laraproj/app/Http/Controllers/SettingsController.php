@@ -33,7 +33,41 @@ class SettingsController extends Controller
     }
 
     /**
-     * Returns the avatar views
+     * Returns the statistics view
+     * calculates releavent stats
+     * @return \Illuminate\Http\Response
+     */
+    public function statistics()
+    {
+        $tasks = Task::getCompleteTasks(false);
+        $notCompleteImportanceInfo[0] = 0;
+        $notCompleteImportanceInfo[1] = 0;
+        $notCompleteImportanceInfo[2] = 0;
+        $notCompleteImportanceInfo[3] = 0;
+        $notCompleteImportanceInfo[4] = 0;
+        $notCompleteImportanceInfo[5] = 0;
+        //Tasks which aren't completed and their importance value
+        foreach($tasks as $task)
+        {
+            $notCompleteImportanceInfo[$task->importanceid]++;
+        }
+        $tasks = Task::getCompleteTasks(true);
+        $completeImportanceInfo[0] = 0;
+        $completeImportanceInfo[1] = 0;
+        $completeImportanceInfo[2] = 0;
+        $completeImportanceInfo[3] = 0;
+        $completeImportanceInfo[4] = 0;
+        $completeImportanceInfo[5] = 0;
+        //Tasks which are completed and their importance value
+        foreach($tasks as $task)
+        {
+            $completeImportanceInfo[$task->importanceid]++;
+        }
+        return view('statistics', compact('notCompleteImportanceInfo',  'completeImportanceInfo'));
+    }
+
+    /**
+     * Returns the avatar view
      *
      * @return \Illuminate\Http\Response
      */

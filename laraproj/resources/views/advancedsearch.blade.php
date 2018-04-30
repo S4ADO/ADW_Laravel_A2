@@ -60,12 +60,12 @@
                             @if (sizeof($tasks) != 0 )
                             <table class="table table-striped">
                                     <tr>
-                                        <th><a href = "/home/added"/>Date added</a></th>  
+                                        <th>Date added</th>  
                                         <th>Title</th>
                                         <th>Body</th>
-                                        <th><a href = "/home/importance"/>Importance</a></th>   
-                                        <th><a href = "/home/completed"/>Date to Complete</a></th>
-                                        <th><a href = "/home/complete"/>Completed</a></th> 
+                                        <th>Importance</th>   
+                                        <th>Date to Complete</th>
+                                        <th>Completed</th> 
                                         <th>Edit</th>
                                         <th>Delete</th>         
                                     </tr>

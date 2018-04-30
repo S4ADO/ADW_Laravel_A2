@@ -30,6 +30,30 @@ class Task extends Model
         return $tasks;
     }
 
+    /**
+    *   Returns all incomplete tasks
+    */
+    public static function getCompleteTasks($completed)
+    {
+        if(!$completed)
+        {
+            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
+            ->where('userid', '=', Auth::user()->id)
+            ->where('complete', '=', 0)
+            ->select('tasks.*', 'importance.importance')
+            ->get();
+        }
+        else
+        {
+            $tasks = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid')
+            ->where('userid', '=', Auth::user()->id)
+            ->where('complete', '=', 1)
+            ->select('tasks.*', 'importance.importance')
+            ->get();
+        }
+        return $tasks;
+    }
+
     public static function advancedSearch($request)
     {
         $query = DB::table('tasks')->join('importance', 'tasks.importanceid', '=', 'importance.importanceid');
